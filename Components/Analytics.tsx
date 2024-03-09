@@ -9,7 +9,10 @@ interface AnalyticsProps {
 const Analytics: React.FC<AnalyticsProps> = ({ handleScrollToIndex }) => {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 50 }} onPress={() => handleScrollToIndex(0)}>
+      <Text
+        style={{ fontSize: 50, fontFamily: "Comfortaa" }}
+        onPress={() => handleScrollToIndex(0)}
+      >
         Analytics
       </Text>
     </View>
@@ -20,7 +23,7 @@ export default Analytics;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "powderblue",
+    backgroundColor: "skyblue",
     height: DevDim.height,
     width: DevDim.width,
     justifyContent: "center",

@@ -10,7 +10,10 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ handleScrollToIndex }) => {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 50 }} onPress={() => handleScrollToIndex(1)}>
+      <Text
+        style={{ fontSize: 50, fontFamily: "Comfortaa" }}
+        onPress={() => handleScrollToIndex(1)}
+      >
         Summary
       </Text>
     </View>

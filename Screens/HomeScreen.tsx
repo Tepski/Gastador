@@ -4,15 +4,15 @@ import Analytics from "../Components/Analytics";
 import Summary from "../Components/Summary";
 
 const HomeScreen = (): React.JSX.Element => {
-  const listRef = useRef<FlatList<React.JSX.Element>>(null);
+  const listRef = useRef<FlatList<any>>(null);
 
-  const handleSrollToIndex = (index: number): void => {
+  const handleScrollToIndex = (index: number): void => {
     listRef.current && listRef.current.scrollToIndex({ animated: true, index });
   };
 
   const ComponentList: React.JSX.Element[] = [
-    <Summary handleScrollToIndex={handleSrollToIndex} />,
-    <Analytics handleScrollToIndex={handleSrollToIndex} />,
+    <Summary key={"summary"} handleScrollToIndex={handleScrollToIndex} />,
+    <Analytics key={"analitycs"} handleScrollToIndex={handleScrollToIndex} />,
   ];
 
   return (
@@ -22,6 +22,7 @@ const HomeScreen = (): React.JSX.Element => {
         data={ComponentList}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        scrollEnabled={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => {
           return item;
