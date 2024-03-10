@@ -6,17 +6,28 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import Colors from "../assets/Colors";
+import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const BottomNavbar = () => {
-  interface NavbarItemsProps {
-    index: Number;
-    name: String;
-    icon: null;
-  }
+interface BottomNavbarProps {
+  handleScrollToIndex: (index: number) => void;
+  selected: number;
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+}
 
+interface NavbarItemsProps {
+  index: number;
+  name: String;
+  icon: "format-list-bulleted" | "chart-bar";
+}
+
+const BottomNavbar: React.FC<BottomNavbarProps> = ({
+  handleScrollToIndex,
+  selected,
+}) => {
   const NavbarItems: NavbarItemsProps[] = [
-    { index: 0, name: "Summary", icon: null },
-    { index: 1, name: "Analytics", icon: null },
+    { index: 0, name: "Summary", icon: "format-list-bulleted" },
+    { index: 1, name: "Analytics", icon: "chart-bar" },
   ];
 
   return (
@@ -29,27 +40,45 @@ const BottomNavbar = () => {
         renderItem={({ item }) => {
           return (
             <View>
-              <Text style={styles.text}>{item.name}</Text>
+              <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={() => handleScrollToIndex(item.index)}
+              >
+                <Icons
+                  name={item.icon}
+                  size={20}
+                  color={
+                    selected == item.index ? Colors.accent : Colors.background
+                  }
+                />
+                <Text
+                  style={[
+                    styles.text,
+                    selected == item.index && { color: Colors.accent },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
             </View>
           );
         }}
       />
       <View style={styles.floatingButton}>
-        <TouchableOpacity activeOpacity={0.7}>
-          <View style={styles.button2}>
-            <Text
-              style={[
-                {
-                  color: "black",
-                  fontSize: 50,
-                  fontFamily: "Comfortaa",
-                },
-              ]}
+        <View>
+          <TouchableOpacity activeOpacity={0.6} style={styles.button2}>
+            {/* <Text
+              style={{
+                color: "black",
+                fontSize: 50,
+                fontFamily: "Comfortaa",
+              }}
             >
               +
-            </Text>
-          </View>
-        </TouchableOpacity>
+            </Text> */}
+            <Icons name="plus" color={Colors.background} size={40} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -60,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "absolute",
     bottom: 20,
-    backgroundColor: "grey",
+    backgroundColor: Colors.primary,
     width: "80%",
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -71,24 +100,29 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Comfortaa",
     color: "white",
-    fontSize: 20,
+    fontSize: 12,
+    textDecorationLine: "none",
   },
   floatingButton: {
     position: "absolute",
     top: -50,
     width: 85,
     height: 85,
-    backgroundColor: "skyblue",
+    backgroundColor: Colors.background,
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
   },
   button2: {
-    backgroundColor: "powderblue",
+    backgroundColor: Colors.secondary,
     width: 70,
-    aspectRatio: 1,
+    height: 70,
     borderRadius: 100,
     elevation: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconContainer: {
     justifyContent: "center",
     alignItems: "center",
   },

@@ -1,14 +1,22 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import HomeScreen from "./Screens/HomeScreen";
-import BottomNavbar from "./Components/BottomNavbar";
+import * as Font from "expo-font";
 
 export default function App() {
+  const [fontLoaded, fontError] = Font.useFonts({
+    Comfortaa: require("./assets/fonts/Comfortaa-Regular.ttf"),
+  });
+
+  if (!fontLoaded && !fontError) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <HomeScreen />
-      <BottomNavbar />
       <StatusBar style="auto" hidden={true} />
+      {/* <AppLoading /> */}
     </View>
   );
 }
