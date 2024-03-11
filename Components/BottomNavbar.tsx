@@ -8,11 +8,13 @@ import {
 } from "react-native";
 import Colors from "../assets/Colors";
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useDispatch } from "react-redux";
 
 interface BottomNavbarProps {
   handleScrollToIndex: (index: number) => void;
   selected: number;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
+  handlePresentModal: () => void;
 }
 
 interface NavbarItemsProps {
@@ -24,11 +26,14 @@ interface NavbarItemsProps {
 const BottomNavbar: React.FC<BottomNavbarProps> = ({
   handleScrollToIndex,
   selected,
+  handlePresentModal,
 }) => {
   const NavbarItems: NavbarItemsProps[] = [
     { index: 0, name: "Summary", icon: "format-list-bulleted" },
     { index: 1, name: "Analytics", icon: "chart-bar" },
   ];
+
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -66,7 +71,11 @@ const BottomNavbar: React.FC<BottomNavbarProps> = ({
       />
       <View style={styles.floatingButton}>
         <View>
-          <TouchableOpacity activeOpacity={0.6} style={styles.button2}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.button2}
+            onPress={() => handlePresentModal()}
+          >
             {/* <Text
               style={{
                 color: "black",
@@ -114,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button2: {
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.accent,
     width: 70,
     height: 70,
     borderRadius: 100,
