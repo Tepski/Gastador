@@ -2,25 +2,31 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 interface GastosState {
+  totalGastos: number;
+  data: dataState[];
+}
+
+interface dataState {
   value: number;
+  icon: any;
+  name: string;
 }
 
 const initialState: GastosState = {
-  value: 0,
+  totalGastos: 0,
+  data: [],
 };
 
 const GastosSlice = createSlice({
   name: "gastos",
   initialState,
   reducers: {
-    addGastos: (state, action: PayloadAction<{ value: number }>) => {
-      state.value -= action.payload.value;
-    },
-    minusGastos: (state, action: PayloadAction<{ value: number }>) => {
-      state.value += action.payload.value;
+    addGastos: (state, action: PayloadAction<dataState>) => {
+      state.data.push(action.payload);
+      state.totalGastos += action.payload.value;
     },
   },
 });
 
-export const { addGastos, minusGastos } = GastosSlice.actions;
+export const { addGastos } = GastosSlice.actions;
 export default GastosSlice.reducer;

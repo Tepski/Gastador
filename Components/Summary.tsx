@@ -6,91 +6,89 @@ import {
   ScaledSize,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Colors from "../assets/Colors";
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 import { UseDispatch, useDispatch, useSelector } from "react-redux";
-import { addGastos, minusGastos } from "../state/gastos/gastosSlice";
+import { addGastos } from "../state/gastos/gastosSlice";
 import { RootState } from "../state/store";
+import { CurvedTransition } from "react-native-reanimated";
 
 const DevDim: ScaledSize = Dimensions.get("screen");
 
-{
-  /* 
-EXPENSES LIST
-
-food
-transpo
-custom
-gas
-others
-rent
-bills
-gym
-internet
-phone
-educational
-*/
-}
-
 const Summary: React.FC = () => {
-  const currentGastos = useSelector((state: RootState) => state.gastos.value);
+  const currentGastos = useSelector((state: RootState) => state.gastos);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(currentGastos.data);
+  }, [currentGastos]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity activeOpacity={0.7}>
-          <Icons name="account-circle" size={40} color={Colors.primary} />
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7}>
-          <Icons name="backburger" size={30} color={Colors.primary} />
-        </TouchableOpacity>
-      </View>
-      <Text style={[{ fontSize: 20 }, styles.text]}>Summary</Text>
-      <Text
-        style={[
-          styles.text,
-          { fontSize: 70, color: currentGastos < 0 ? "red" : "green" },
-        ]}
+      <View
+        style={{
+          backgroundColor: Colors.background,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 30,
+          elevation: 10,
+          borderRadius: 40,
+        }}
       >
-        {currentGastos}
-      </Text>
-      <View style={{ flexDirection: "row" }}>
+        <View style={styles.header}>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Icons name="account-circle" size={40} color={Colors.primary} />
+          </TouchableOpacity>
+          <Text style={[{ fontSize: 20, color: Colors.primary }, styles.text]}>
+            Summary
+          </Text>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Icons name="backburger" size={30} color={Colors.primary} />
+          </TouchableOpacity>
+        </View>
         <Text
-          onPress={() => dispatch(addGastos({ value: 20 }))}
+          style={[
+            styles.text,
+            {
+              fontSize: 100,
+              color: currentGastos.totalGastos < 0 ? "red" : "green",
+            },
+          ]}
+        >
+          {currentGastos.totalGastos}
+        </Text>
+      </View>
+      <View style={{ width: "100%", paddingHorizontal: 30 }}>
+        <View
           style={{
-            backgroundColor: "white",
-            elevation: 10,
-            paddingVertical: 10,
-            fontSize: 20,
-            fontFamily: "Comfortaa",
-            borderRadius: 30,
-            justifyContent: "center",
-            textAlign: "center",
-            margin: 5,
-            width: "30%",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            borderColor: Colors.secondary,
+            paddingTop: 20,
           }}
         >
-          ADD
-        </Text>
-        <Text
-          onPress={() => dispatch(minusGastos({ value: 20 }))}
-          style={{
-            backgroundColor: "white",
-            elevation: 10,
-            paddingVertical: 10,
-            fontSize: 20,
-            fontFamily: "Comfortaa",
-            borderRadius: 30,
-            justifyContent: "center",
-            textAlign: "center",
-            margin: 5,
-            width: "30%",
-          }}
-        >
-          MINUS
-        </Text>
+          <Text style={{ color: Colors.primary }}>Recent</Text>
+          <Text style={{ color: Colors.primary }}>Amount</Text>
+        </View>
+        <View>
+          {currentGastos.data.map((item, index) => {
+            return (
+              <View
+                key={index}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text>{item.time}</Text>
+                <Text>{item.icon}</Text>
+                <Text>{item.name}</Text>
+                <Text>{item.value}</Text>
+              </View>
+            );
+          })}
+        </View>
       </View>
     </View>
   );
@@ -103,7 +101,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     height: DevDim.height,
     width: DevDim.width,
-    paddingTop: 25,
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -123,5 +120,16 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Comfortaa",
   },
-  settings: {},
+  settings: {
+    backgroundColor: "white",
+    elevation: 10,
+    paddingVertical: 10,
+    fontSize: 20,
+    fontFamily: "Comfortaa",
+    borderRadius: 30,
+    justifyContent: "center",
+    textAlign: "center",
+    margin: 5,
+    width: "30%",
+  },
 });

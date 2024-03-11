@@ -30,7 +30,7 @@
       [
           "expo-font",
         {
-          "fonts": ["./assets/fonts/Comfortaa-Regular.ttf"]
+          "Comfortaa-Regular": ["./assets/fonts/Comfortaa-Regular.ttf"]
         }
       ]
     ]

@@ -10,7 +10,7 @@ interface ColorsProps {
 
 const Colors: ColorsProps = {
   text: "#0d0c10",
-  background: "#f5f5f7",
+  background: "#ededef",
   primary: "#817b98",
   secondary: "#c3b4b1",
   accent: "#b0aa99",

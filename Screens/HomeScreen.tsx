@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, SetStateAction } from "react";
 import {
   View,
   FlatList,
@@ -16,14 +16,31 @@ import {
   BottomSheetView,
 } from "@gorhom/bottom-sheet/";
 import Colors from "../assets/Colors";
+import { useDispatch } from "react-redux";
+import { addGastos } from "../state/gastos/gastosSlice";
 
-const HomeScreen = (): React.JSX.Element => {
+interface DataProps {
+  name: string;
+  value: number;
+  time: string;
+  icon: string;
+}
+
+const HomeScreen: React.FC = (): React.ReactElement => {
   const [selected, setSelected] = useState<number>(0);
+  const [data, setData] = useState<DataProps>({
+    name: "",
+    value: 0,
+    time: "",
+    icon: "",
+  });
+
+  const dispatch = useDispatch();
 
   const listRef = useRef<FlatList<any>>(null);
   const modalref = useRef<BottomSheetModal>(null);
 
-  const snapPoints = useMemo(() => ["20%", "70%"], []);
+  const snapPoints = useMemo(() => ["20%", "75%"], []);
 
   const handleScrollToIndex = (index: number): void => {
     listRef.current && listRef.current.scrollToIndex({ animated: true, index });
@@ -32,6 +49,11 @@ const HomeScreen = (): React.JSX.Element => {
 
   const handlePresentModal = (): void => {
     modalref.current?.present();
+  };
+
+  const handleConfirmation = (): void => {
+    dispatch(addGastos(data));
+    modalref.current?.dismiss();
   };
 
   const ComponentList: React.JSX.Element[] = [<Summary />, <Analytics />];
@@ -63,10 +85,7 @@ const HomeScreen = (): React.JSX.Element => {
           ref={modalref}
           index={1}
           footerComponent={() => (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => modalref.current?.dismiss()}
-            >
+            <TouchableOpacity activeOpacity={0.7} onPress={handleConfirmation}>
               <View style={styles.footer}>
                 <Text
                   style={{
@@ -82,7 +101,7 @@ const HomeScreen = (): React.JSX.Element => {
           )}
         >
           <BottomSheetView style={{ flex: 1 }}>
-            <BottomSheetComponent />
+            <BottomSheetComponent setData={setData} data={data} />
           </BottomSheetView>
         </BottomSheetModal>
       </View>
