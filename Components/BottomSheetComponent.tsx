@@ -25,8 +25,6 @@ interface IconListProps {
   icon: any;
 }
 
-console.log("1234");
-
 const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
   setData,
   data,
