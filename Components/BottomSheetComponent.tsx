@@ -4,7 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 import Colors from "../assets/Colors";
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
-import { UseSelector, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
 interface BottomSheetComponentProps {
@@ -24,6 +24,8 @@ interface IconListProps {
   name: string;
   icon: any;
 }
+
+console.log("1234");
 
 const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
   setData,
