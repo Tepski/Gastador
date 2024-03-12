@@ -4,6 +4,8 @@ import { TextInput } from "react-native-gesture-handler";
 import Colors from "../assets/Colors";
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
+import { UseSelector, useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 interface BottomSheetComponentProps {
   setData: Dispatch<SetStateAction<DataProps>>;
@@ -11,6 +13,7 @@ interface BottomSheetComponentProps {
 }
 
 interface DataProps {
+  id: number;
   name: string;
   value: number;
   icon: string;
@@ -29,6 +32,8 @@ const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<
     IconListProps | undefined
   >();
+
+  const currentGastos = useSelector((state: RootState) => state.gastos.data);
 
   const getDate = (): string => {
     let hours;
@@ -58,6 +63,7 @@ const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
   useEffect(() => {
     setData({
       ...data,
+      id: currentGastos.length,
       name: selectedCategory?.name ?? "",
       icon: selectedCategory?.icon ?? "",
     });

@@ -9,16 +9,14 @@ import {
 import React, { useEffect, useState } from "react";
 import Colors from "../assets/Colors";
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
-import { UseDispatch, useDispatch, useSelector } from "react-redux";
-import { addGastos } from "../state/gastos/gastosSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
-import { CurvedTransition } from "react-native-reanimated";
+import HistoryComponent from "./HistoryComponent";
 
 const DevDim: ScaledSize = Dimensions.get("screen");
 
 const Summary: React.FC = () => {
   const currentGastos = useSelector((state: RootState) => state.gastos);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(currentGastos.data);
@@ -58,6 +56,9 @@ const Summary: React.FC = () => {
         >
           {currentGastos.totalGastos}
         </Text>
+        <Text style={{ fontFamily: "Comfortaa", color: Colors.primary }}>
+          Total Expenses
+        </Text>
       </View>
       <View style={{ width: "100%", paddingHorizontal: 30 }}>
         <View
@@ -68,27 +69,10 @@ const Summary: React.FC = () => {
             paddingTop: 20,
           }}
         >
-          <Text style={{ color: Colors.primary }}>Recent</Text>
-          <Text style={{ color: Colors.primary }}>Amount</Text>
+          <Text style={{ color: Colors.secondary }}>Recent</Text>
+          <Text style={{ color: Colors.secondary }}>Amount</Text>
         </View>
-        <View>
-          {currentGastos.data.map((item, index) => {
-            return (
-              <View
-                key={index}
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text>{item.time}</Text>
-                <Text>{item.icon}</Text>
-                <Text>{item.name}</Text>
-                <Text>{item.value}</Text>
-              </View>
-            );
-          })}
-        </View>
+        <HistoryComponent data={currentGastos.data} />
       </View>
     </View>
   );

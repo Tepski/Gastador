@@ -1,5 +1,6 @@
-import React, { useState, useRef, useMemo, SetStateAction } from "react";
+import React, { useState, useRef, useMemo, useEffect } from "react";
 import {
+  BackHandler,
   View,
   FlatList,
   StyleSheet,
@@ -10,16 +11,17 @@ import Analytics from "../Components/Analytics";
 import Summary from "../Components/Summary";
 import BottomNavbar from "../Components/BottomNavbar";
 import BottomSheetComponent from "../Components/BottomSheetComponent";
+import Colors from "../assets/Colors";
+import { useDispatch } from "react-redux";
+import { addGastos } from "../state/gastos/gastosSlice";
 import {
   BottomSheetModalProvider,
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet/";
-import Colors from "../assets/Colors";
-import { useDispatch } from "react-redux";
-import { addGastos } from "../state/gastos/gastosSlice";
 
 interface DataProps {
+  id: number;
   name: string;
   value: number;
   time: string;
@@ -29,6 +31,7 @@ interface DataProps {
 const HomeScreen: React.FC = (): React.ReactElement => {
   const [selected, setSelected] = useState<number>(0);
   const [data, setData] = useState<DataProps>({
+    id: 0,
     name: "",
     value: 0,
     time: "",
@@ -57,6 +60,20 @@ const HomeScreen: React.FC = (): React.ReactElement => {
   };
 
   const ComponentList: React.JSX.Element[] = [<Summary />, <Analytics />];
+
+  useEffect(() => {
+    const backAction = () => {
+      modalref.current?.dismiss();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <BottomSheetModalProvider>

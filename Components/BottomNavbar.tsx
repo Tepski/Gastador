@@ -52,12 +52,12 @@ const BottomNavbar: React.FC<BottomNavbarProps> = ({
                 <Icons
                   name={item.icon}
                   size={20}
-                  color={selected == item.index ? "orange" : Colors.background}
+                  color={selected == item.index ? "pink" : Colors.background}
                 />
                 <Text
                   style={[
                     styles.text,
-                    selected == item.index && { color: "orange" },
+                    selected == item.index && { color: "pink" },
                   ]}
                 >
                   {item.name}

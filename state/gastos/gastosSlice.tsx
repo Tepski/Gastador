@@ -7,14 +7,20 @@ interface GastosState {
 }
 
 interface dataState {
+  id: number;
   value: number;
   icon: any;
   name: string;
+  time: string;
 }
 
 const initialState: GastosState = {
   totalGastos: 0,
   data: [],
+};
+
+const sortData = (item: dataState[]) => {
+  return item.sort((a, b) => b.id - a.id);
 };
 
 const GastosSlice = createSlice({
@@ -23,10 +29,18 @@ const GastosSlice = createSlice({
   reducers: {
     addGastos: (state, action: PayloadAction<dataState>) => {
       state.data.push(action.payload);
+      state.data = sortData(state.data);
       state.totalGastos += action.payload.value;
+    },
+    deleteGastos: (state, action: PayloadAction<dataState>) => {
+      const newState = state.data.filter(
+        (item) => JSON.stringify(item) != JSON.stringify(action.payload)
+      );
+      state.data = sortData(newState);
+      state.totalGastos -= action.payload.value;
     },
   },
 });
 
-export const { addGastos } = GastosSlice.actions;
+export const { addGastos, deleteGastos } = GastosSlice.actions;
 export default GastosSlice.reducer;
