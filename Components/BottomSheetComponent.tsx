@@ -17,7 +17,7 @@ interface DataProps {
   name: string;
   value: number;
   icon: string;
-  time: string;
+  time: Date;
 }
 
 interface IconListProps {
@@ -108,7 +108,11 @@ const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
           style={styles.textInput}
           placeholder="Enter Amount . . ."
           onChangeText={(e) =>
-            setData({ ...data, value: parseFloat(e), time: getDate() })
+            setData({
+              ...data,
+              value: parseFloat(e),
+              time: new Date(),
+            })
           }
         />
       </View>

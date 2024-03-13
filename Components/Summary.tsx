@@ -18,10 +18,6 @@ const DevDim: ScaledSize = Dimensions.get("screen");
 const Summary: React.FC = () => {
   const currentGastos = useSelector((state: RootState) => state.gastos);
 
-  // useEffect(() => {
-  //   console.log(currentGastos.data);
-  // }, [currentGastos]);
-
   return (
     <View style={styles.container}>
       <View
@@ -54,7 +50,7 @@ const Summary: React.FC = () => {
             },
           ]}
         >
-          {currentGastos.totalGastos}
+          ₱{currentGastos.totalGastos}
         </Text>
         <Text style={{ fontFamily: "Comfortaa", color: Colors.primary }}>
           Total Expenses

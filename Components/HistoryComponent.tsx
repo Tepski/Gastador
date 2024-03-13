@@ -12,7 +12,7 @@ interface HistoryComponentProps {
 interface dataProps {
   id: number;
   name: string;
-  time: string;
+  time: Date;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
   value: number;
 }
@@ -38,6 +38,23 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
     }
   };
 
+  const getDate = (time: Date): void => {
+    let hours: string;
+    let minutes: string;
+
+    try {
+      hours = time.getHours().toString();
+      minutes = time.getMinutes().toString();
+
+      const newDate = `${hours.length == 1 ? "0" + hours : hours}:${
+        minutes.length == 1 ? "0" + minutes : minutes
+      }`;
+      console.log(newDate);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View>
       {data.map((item, index) => {
@@ -50,14 +67,13 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
               paddingVertical: 10,
               alignItems: "center",
             }}
-            onLongPress={() => handleLongPress(item)}
+            // onLongPress={() => handleLongPress(item)}
+            onPress={() => getDate(item.time)}
           >
-            <Text style={{ fontFamily: "Comfortaa" }}>{item.time}</Text>
             <View
               style={{
                 flex: 1,
                 flexDirection: "row",
-                paddingHorizontal: 20,
                 alignItems: "center",
               }}
             >
@@ -74,15 +90,29 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
                   color={Colors.background}
                 />
               </View>
-              <Text
+              <View
                 style={{
-                  fontFamily: "Comfortaa",
                   paddingHorizontal: 5,
-                  color: Colors.primary,
+                  justifyContent: "center",
                 }}
               >
-                {item.name}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "Comfortaa",
+                  }}
+                >
+                  {item.name}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Comfortaa",
+                    fontSize: 12,
+                    color: Colors.primary,
+                  }}
+                >
+                  {JSON.stringify(item.time)}
+                </Text>
+              </View>
             </View>
             <Text style={{ fontFamily: "Comfortaa" }}>{item.value}</Text>
           </TouchableOpacity>

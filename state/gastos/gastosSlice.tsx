@@ -11,7 +11,7 @@ interface dataState {
   value: number;
   icon: any;
   name: string;
-  time: string;
+  time: Date;
 }
 
 const initialState: GastosState = {
@@ -30,14 +30,14 @@ const GastosSlice = createSlice({
     addGastos: (state, action: PayloadAction<dataState>) => {
       state.data.push(action.payload);
       state.data = sortData(state.data);
-      state.totalGastos += action.payload.value;
+      state.totalGastos -= action.payload.value;
     },
     deleteGastos: (state, action: PayloadAction<dataState>) => {
       const newState = state.data.filter(
         (item) => JSON.stringify(item) != JSON.stringify(action.payload)
       );
       state.data = sortData(newState);
-      state.totalGastos -= action.payload.value;
+      state.totalGastos += action.payload.value;
     },
   },
 });
