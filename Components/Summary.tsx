@@ -18,9 +18,9 @@ const DevDim: ScaledSize = Dimensions.get("screen");
 const Summary: React.FC = () => {
   const currentGastos = useSelector((state: RootState) => state.gastos);
 
-  useEffect(() => {
-    console.log(currentGastos.data);
-  }, [currentGastos]);
+  // useEffect(() => {
+  //   console.log(currentGastos.data);
+  // }, [currentGastos]);
 
   return (
     <View style={styles.container}>
