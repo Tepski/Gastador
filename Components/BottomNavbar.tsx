@@ -74,15 +74,6 @@ const BottomNavbar: React.FC<BottomNavbarProps> = ({
             style={styles.button2}
             onPress={() => handlePresentModal()}
           >
-            {/* <Text
-              style={{
-                color: "black",
-                fontSize: 50,
-                fontFamily: "Comfortaa",
-              }}
-            >
-              +
-            </Text> */}
             <Icons name="plus" color={Colors.background} size={40} />
           </TouchableOpacity>
         </View>
@@ -105,7 +96,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
     color: "white",
     fontSize: 12,
     textDecorationLine: "none",

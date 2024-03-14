@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   const [fontLoaded, fontError] = Font.useFonts({
-    Comfortaa: require("./assets/fonts/Comfortaa-Regular.ttf"),
+    MadimiOne: require("./assets/fonts/Nunito-Regular.ttf"),
   });
 
   if (!fontLoaded && !fontError) {
@@ -29,7 +29,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    fontFamily: "Comfortaa-Regular",
+    fontFamily: "MadimiOne",
     flex: 1,
     backgroundColor: "tomato",
     alignItems: "center",

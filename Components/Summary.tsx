@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Colors from "../assets/Colors";
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import HistoryComponent from "./HistoryComponent";
 
@@ -18,16 +18,22 @@ const DevDim: ScaledSize = Dimensions.get("screen");
 const Summary: React.FC = () => {
   const currentGastos = useSelector((state: RootState) => state.gastos);
 
+  // FUCNTION FOR CALCULATING NUMBER OF DAYS PER MONTH
+  // function getDaysInMonth(year: number): void {
+  //   const newList = Array.from({ length: 12 }, (_, month) =>
+  //     new Date(year, month + 1, 0).getDate()
+  //   );
+  //   console.log(newList);
+  // }
+
   return (
     <View style={styles.container}>
       <View
         style={{
           backgroundColor: Colors.background,
-          justifyContent: "center",
-          alignItems: "center",
           paddingVertical: 30,
-          elevation: 10,
-          borderRadius: 40,
+          width: "100%",
+          alignItems: "center",
         }}
       >
         <View style={styles.header}>
@@ -41,20 +47,22 @@ const Summary: React.FC = () => {
             <Icons name="backburger" size={30} color={Colors.primary} />
           </TouchableOpacity>
         </View>
-        <Text
-          style={[
-            styles.text,
-            {
-              fontSize: 100,
-              color: currentGastos.totalGastos < 0 ? "red" : "green",
-            },
-          ]}
-        >
-          ₱{currentGastos.totalGastos}
-        </Text>
-        <Text style={{ fontFamily: "Comfortaa", color: Colors.primary }}>
-          Total Expenses
-        </Text>
+        <View style={styles.expense}>
+          <Text
+            style={[
+              styles.text,
+              {
+                fontSize: 100,
+                color: currentGastos.totalGastos < 0 ? "red" : "green",
+              },
+            ]}
+          >
+            ₱{currentGastos.totalGastos}
+          </Text>
+          <Text style={{ fontFamily: "MadimiOne", color: Colors.primary }}>
+            Total Expenses
+          </Text>
+        </View>
       </View>
       <View style={{ width: "100%", paddingHorizontal: 30 }}>
         <View
@@ -63,10 +71,17 @@ const Summary: React.FC = () => {
             flexDirection: "row",
             borderColor: Colors.secondary,
             paddingTop: 20,
+            paddingBottom: 5,
+            borderBottomWidth: 1,
+            borderBottomColor: Colors.text,
           }}
         >
-          <Text style={{ color: Colors.secondary }}>Recent</Text>
-          <Text style={{ color: Colors.secondary }}>Amount</Text>
+          <Text style={{ color: Colors.secondary, fontFamily: "MadimiOne" }}>
+            Recent
+          </Text>
+          <Text style={{ color: Colors.secondary, fontFamily: "MadimiOne" }}>
+            Amount
+          </Text>
         </View>
         <HistoryComponent data={currentGastos.data} />
       </View>
@@ -98,18 +113,30 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   text: {
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
   },
   settings: {
     backgroundColor: "white",
     elevation: 10,
     paddingVertical: 10,
     fontSize: 20,
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
     borderRadius: 30,
     justifyContent: "center",
     textAlign: "center",
     margin: 5,
     width: "30%",
+  },
+  expense: {
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 20,
+    backgroundColor: Colors.background,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    width: "90%",
+    borderRadius: 20,
+    padding: 20,
   },
 });

@@ -106,7 +106,7 @@ const HomeScreen: React.FC = (): React.ReactElement => {
               <View style={styles.footer}>
                 <Text
                   style={{
-                    fontFamily: "Comfortaa",
+                    fontFamily: "MadimiOne",
                     fontSize: 20,
                     color: Colors.background,
                   }}
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
     fontSize: 80,
   },
   footer: {

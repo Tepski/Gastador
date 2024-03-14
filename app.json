@@ -28,10 +28,7 @@
     },
     "plugins": [
       [
-          "expo-font",
-        {
-          "Comfortaa-Regular": ["./assets/fonts/Comfortaa-Regular.ttf"]
-        }
+          "expo-font"
       ]
     ]
   }

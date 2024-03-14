@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
 import Colors from "../assets/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons/";
@@ -12,7 +12,7 @@ interface HistoryComponentProps {
 interface dataProps {
   id: number;
   name: string;
-  time: Date;
+  time: string;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
   value: number;
 }
@@ -38,7 +38,7 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
     }
   };
 
-  const getDate = (time: Date): void => {
+  const getDate = (time: Date): string | void => {
     let hours: string;
     let minutes: string;
 
@@ -51,7 +51,7 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
       }`;
       console.log(newDate);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -67,8 +67,8 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
               paddingVertical: 10,
               alignItems: "center",
             }}
-            // onLongPress={() => handleLongPress(item)}
-            onPress={() => getDate(item.time)}
+            onLongPress={() => handleLongPress(item)}
+            onPress={() => console.log(getDate(new Date(item.time)))}
           >
             <View
               style={{
@@ -98,23 +98,24 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
               >
                 <Text
                   style={{
-                    fontFamily: "Comfortaa",
+                    fontFamily: "MadimiOne",
                   }}
                 >
                   {item.name}
                 </Text>
                 <Text
                   style={{
-                    fontFamily: "Comfortaa",
+                    fontFamily: "MadimiOne",
                     fontSize: 12,
                     color: Colors.primary,
                   }}
                 >
-                  {JSON.stringify(item.time)}
+                  {/* {getDate(new Date(item.time))} */}
+                  {item.time}
                 </Text>
               </View>
             </View>
-            <Text style={{ fontFamily: "Comfortaa" }}>{item.value}</Text>
+            <Text style={{ fontFamily: "MadimiOne" }}>{item.value}</Text>
           </TouchableOpacity>
         );
       })}
@@ -129,7 +130,7 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
       >
         <View
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0)",
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
             height: "100%",
             width: "100%",
             justifyContent: "center",
@@ -139,7 +140,7 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
           <View style={styles.cofirmationContainer}>
             <Text
               style={{
-                fontFamily: "Comfortaa",
+                fontFamily: "MadimiOne",
                 marginBottom: 30,
                 color: Colors.primary,
               }}
@@ -169,7 +170,7 @@ const HistoryComponent: React.FC<HistoryComponentProps> = ({
 
 const styles = StyleSheet.create({
   cofirmationContainer: {
-    backgroundColor: Colors.background,
+    backgroundColor: "white",
     width: "80%",
     padding: 30,
     borderRadius: 15,
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
     fontSize: 20,
     borderRadius: 20,
     borderWidth: 1,

@@ -17,7 +17,7 @@ interface DataProps {
   name: string;
   value: number;
   icon: string;
-  time: Date;
+  time: string;
 }
 
 interface IconListProps {
@@ -111,7 +111,7 @@ const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
             setData({
               ...data,
               value: parseFloat(e),
-              time: new Date(),
+              time: new Date().toLocaleTimeString(),
             })
           }
         />
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 5,
     fontSize: 20,
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
   },
   textInputContainer: {
     width: "100%",
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   text: {
-    fontFamily: "Comfortaa",
+    fontFamily: "MadimiOne",
   },
   iconContainer: {
     justifyContent: "center",

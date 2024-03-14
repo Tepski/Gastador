@@ -11,7 +11,7 @@ interface dataState {
   value: number;
   icon: any;
   name: string;
-  time: Date;
+  time: string;
 }
 
 const initialState: GastosState = {
