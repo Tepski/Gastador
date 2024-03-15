@@ -35,17 +35,17 @@ const BottomSheetComponent: React.FC<BottomSheetComponentProps> = ({
 
   const currentGastos = useSelector((state: RootState) => state.gastos.data);
 
-  const getDate = (): string => {
-    let hours;
-    let minutes;
+  // const getDate = (): string => {
+  //   let hours;
+  //   let minutes;
 
-    hours = new Date().getHours().toString();
-    minutes = new Date().getMinutes().toString();
+  //   hours = new Date().getHours().toString();
+  //   minutes = new Date().getMinutes().toString();
 
-    return `${hours.length == 1 ? "0" + hours : hours}:${
-      minutes.length == 1 ? "0" + minutes : minutes
-    }`;
-  };
+  //   return `${hours.length == 1 ? "0" + hours : hours}:${
+  //     minutes.length == 1 ? "0" + minutes : minutes
+  //   }`;
+  // };
 
   const iconList: IconListProps[] = [
     { name: "Food", icon: "food-fork-drink" },

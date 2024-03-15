@@ -1,6 +1,14 @@
-import { StyleSheet, Text, View, Dimensions, ScaledSize } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  ScaledSize,
+  ScrollView,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import Colors from "../assets/Colors";
+import { createClient } from "@supabase/supabase-js";
 import {
   PieChart,
   pieDataItem,
@@ -9,11 +17,21 @@ import {
   LineChart,
   lineDataItem,
 } from "react-native-gifted-charts";
-import { ScrollView } from "react-native-gesture-handler";
 
 const DevDim: ScaledSize = Dimensions.get("screen");
+const supabase = createClient(
+  "https://gazuuhetjchlqetwtnoz.supabase.co",
+  "https://gazuuhetjchlqetwtnoz.supabase.co"
+);
 
 const Analytics: React.FC = () => {
+  const [countries, setCountries] = useState([]);
+
+  const getCountries = async () => {
+    const { data }: any = await supabase.from("countries").select();
+    setCountries(data);
+  };
+
   const pieData: pieDataItem[] = [
     { value: 200, color: Colors.primary.toString(), text: "Food" },
     { value: 80, color: Colors.secondary.toString(), text: "Transportation" },
@@ -34,11 +52,19 @@ const Analytics: React.FC = () => {
     { value: 15 },
     { value: 30 },
     { value: 26 },
-    { value: 40 },
+    { value: 45 },
     { value: 50 },
     { value: 60 },
     { value: 30 },
   ];
+
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  useEffect(() => {
+    console.log(countries);
+  }, [countries]);
 
   return (
     <View style={styles.container}>
@@ -120,6 +146,7 @@ const Analytics: React.FC = () => {
               barBorderRadius={100}
               frontColor="lightgray"
               data={barData}
+              disablePress
               hideRules
               yAxisThickness={0}
               xAxisThickness={0}

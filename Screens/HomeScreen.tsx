@@ -14,6 +14,8 @@ import BottomSheetComponent from "../Components/BottomSheetComponent";
 import Colors from "../assets/Colors";
 import { useDispatch } from "react-redux";
 import { addGastos } from "../state/gastos/gastosSlice";
+import { db } from "../firebase/firebase";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import {
   BottomSheetModalProvider,
   BottomSheetModal,
@@ -50,6 +52,24 @@ const HomeScreen: React.FC = (): React.ReactElement => {
     setSelected(index);
   };
 
+  const handleAddData = async (item: DataProps) => {
+    try {
+      await setDoc(
+        doc(db, new Date().toDateString(), item.id.toString()),
+        item
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCol = async () => {
+    let newList: any = [];
+    const newData = await getDocs(collection(db, new Date().toDateString()));
+    newData.forEach((item) => newList.push(item.data()));
+    console.log(newList);
+  };
+
   const handlePresentModal = (): void => {
     modalref.current?.present();
   };
@@ -57,6 +77,7 @@ const HomeScreen: React.FC = (): React.ReactElement => {
   const handleConfirmation = (): void => {
     dispatch(addGastos(data));
     modalref.current?.dismiss();
+    handleAddData(data);
   };
 
   const ComponentList: React.JSX.Element[] = [<Summary />, <Analytics />];
@@ -71,6 +92,8 @@ const HomeScreen: React.FC = (): React.ReactElement => {
       "hardwareBackPress",
       backAction
     );
+
+    getCol();
 
     return () => backHandler.remove();
   }, []);

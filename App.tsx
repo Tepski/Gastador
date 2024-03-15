@@ -5,6 +5,7 @@ import * as Font from "expo-font";
 import { Provider } from "react-redux";
 import { store } from "./state/store";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Testing from "./Components/Testing";
 
 export default function App() {
   const [fontLoaded, fontError] = Font.useFonts({
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
   container: {
     fontFamily: "MadimiOne",
     flex: 1,
-    backgroundColor: "tomato",
     alignItems: "center",
     justifyContent: "center",
   },
